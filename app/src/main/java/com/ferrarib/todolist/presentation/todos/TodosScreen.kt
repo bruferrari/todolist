@@ -1,6 +1,8 @@
 package com.ferrarib.todolist.presentation.todos
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,17 +25,13 @@ fun TodosScreen(
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
+fun TodoItem(modifier: Modifier = Modifier, content: String) {
+    Row(
         modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TodolistTheme {
-        Greeting("Android")
+            .clickable(enabled = true, onClick = {
+                // TODO: impl
+            })
+    ) {
+        Text(text = content)
     }
 }
