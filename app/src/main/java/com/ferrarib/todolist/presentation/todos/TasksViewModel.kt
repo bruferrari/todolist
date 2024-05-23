@@ -5,6 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TodosViewModel @Inject constructor() : ViewModel() {
+class TasksViewModel @Inject constructor() : ViewModel() {
 
 }
