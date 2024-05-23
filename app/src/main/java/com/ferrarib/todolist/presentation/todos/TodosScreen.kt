@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,7 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ferrarib.todolist.R
-import com.ferrarib.todolist.ui.theme.Purple80
+import com.ferrarib.todolist.ui.components.ScreenTitle
 
 val mockList: List<String>
     get() {
@@ -42,6 +42,8 @@ fun TodosScreen(
     Column(
         modifier = modifier.fillMaxSize()
     ) {
+        ScreenTitle(title = "Your TO-DOs")
+
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -66,8 +68,6 @@ fun TodoItem(
     content: String,
     onItemClicked: (String) -> Unit
 ) {
-    val shape = RoundedCornerShape(16.dp)
-
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -75,8 +75,11 @@ fun TodoItem(
             .fillMaxWidth()
             .height(60.dp)
             .padding(horizontal = 20.dp)
-            .background(color = Purple80, shape = shape)
-            .clip(shape)
+            .background(
+                color = MaterialTheme.colorScheme.primary,
+                shape = MaterialTheme.shapes.medium
+            )
+            .clip(MaterialTheme.shapes.medium)
             .clickable(
                 enabled = true,
                 onClick = {
@@ -85,6 +88,8 @@ fun TodoItem(
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onPrimary,
             text = content
         )
 
