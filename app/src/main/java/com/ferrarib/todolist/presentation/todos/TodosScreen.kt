@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.ferrarib.todolist.R
 import com.ferrarib.todolist.ui.components.InteractiveDialog
@@ -72,16 +75,22 @@ fun TodosScreen(
             itemsIndexed(mockList) { index, item ->
                 val paddingTop = if (index == 0) 20.dp else 0.dp
                 val paddingBottom = if (index == mockList.size - 1) 20.dp else 0.dp
+                var isComplete by remember { mutableStateOf(false) }
 
                 TodoItem(
                     modifier = Modifier.padding(top = paddingTop, bottom = paddingBottom),
                     content = item,
+                    isComplete = isComplete,
                     onItemClicked = { id ->
                         onDetailsClicked.invoke(id)
                     },
                     onDeleteItemClicked = { id ->
                         Timber.d("Dialog shown for id: $id")
                         shouldDisplayDeletionDialog = true
+                    },
+                    onComplete = { id ->
+                        isComplete = !isComplete
+                        Timber.d("Checked: $id")
                     }
                 )
             }
@@ -93,8 +102,10 @@ fun TodosScreen(
 fun TodoItem(
     modifier: Modifier = Modifier,
     content: String,
+    isComplete: Boolean,
     onItemClicked: (String) -> Unit,
-    onDeleteItemClicked: (String) -> Unit
+    onDeleteItemClicked: (String) -> Unit,
+    onComplete: (String) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -114,10 +125,25 @@ fun TodoItem(
                     onItemClicked.invoke("1")
                 })
     ) {
+        Checkbox(
+            checked = isComplete,
+            onCheckedChange = { onComplete.invoke("1") },
+            colors = CheckboxDefaults.colors()
+                .copy(
+                    uncheckedCheckmarkColor = MaterialTheme.colorScheme.onPrimary,
+                    checkedBorderColor = MaterialTheme.colorScheme.onPrimary,
+                    uncheckedBorderColor = MaterialTheme.colorScheme.onPrimary
+                )
+        )
+
         Text(
-            modifier = Modifier.padding(horizontal = 20.dp),
+            modifier = Modifier
+                .padding(horizontal = 20.dp),
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onPrimary.copy(
+                alpha = if (isComplete) 0.6f else 1f
+            ),
+            textDecoration = if (isComplete) TextDecoration.LineThrough else TextDecoration.None,
             text = content
         )
 
