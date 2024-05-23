@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">todolist</string>
 
-    <string name="todos_list_screen_title">What needs to be done</string>
+    <string name="todos_list_screen_title">Tasks</string>
 
     <!-- region interactive dialog -->
     <string name="deletion_dialog_title">Delete</string>

@@ -10,6 +10,7 @@ activityCompose = "1.9.0"
 composeBom = "2024.05.00"
 navigationCompose = "2.7.7"
 hiltVersion = "2.50"
+hiltNavigationCompose = "1.2.0"
 kspVersion = "1.9.24-1.0.20"
 timberVersion = "5.0.1"
 
@@ -31,6 +32,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
+hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timberVersion" }
 
 [plugins]
