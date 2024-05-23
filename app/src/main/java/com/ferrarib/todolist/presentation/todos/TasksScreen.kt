@@ -45,7 +45,7 @@ val mockList: List<String>
     }
 
 @Composable
-fun TodosScreen(
+fun TasksScreen(
     modifier: Modifier = Modifier,
     onDetailsClicked: (String) -> Unit
 ) {

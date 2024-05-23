@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.ferrarib.todolist.presentation.details.DetailsScreen
-import com.ferrarib.todolist.presentation.todos.TodosScreen
+import com.ferrarib.todolist.presentation.todos.TasksScreen
 
 sealed class Screens(val route: String) {
     data object Todos : Screens(route = "todo_list")
@@ -22,7 +22,7 @@ sealed class Params(val value: String) {
 fun AppNavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Screens.Todos.route) {
         composable(route = Screens.Todos.route) {
-            TodosScreen(
+            TasksScreen(
                 onDetailsClicked = { id ->
                     navController.navigate("${Screens.TodoDetails.route}/$id")
                 }
