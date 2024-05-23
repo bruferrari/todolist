@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.ferrarib.todolist.presentation.details.DetailsScreen
 import com.ferrarib.todolist.presentation.todos.TasksScreen
+import androidx.hilt.navigation.compose.hiltViewModel
 
 sealed class Screens(val route: String) {
     data object Todos : Screens(route = "todo_list")
@@ -23,6 +24,7 @@ fun AppNavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = Screens.Todos.route) {
         composable(route = Screens.Todos.route) {
             TasksScreen(
+                viewModel = hiltViewModel(),
                 onDetailsClicked = { id ->
                     navController.navigate("${Screens.TodoDetails.route}/$id")
                 }

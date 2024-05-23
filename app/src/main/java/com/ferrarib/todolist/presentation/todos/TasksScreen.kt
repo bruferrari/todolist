@@ -18,6 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,21 +35,13 @@ import com.ferrarib.todolist.ui.components.InteractiveDialog
 import com.ferrarib.todolist.ui.components.ScreenTitle
 import timber.log.Timber
 
-val mockList: List<String>
-    get() {
-        val temp = mutableListOf<String>()
-        (0..20).forEach { index ->
-            temp.add("This is a test $index")
-        }
-
-        return temp.toList()
-    }
-
 @Composable
 fun TasksScreen(
     modifier: Modifier = Modifier,
+    viewModel: TasksViewModel,
     onDetailsClicked: (String) -> Unit
 ) {
+    val taskList by viewModel.tasksListState.collectAsState()
     var shouldDisplayDeletionDialog by remember { mutableStateOf(false) }
 
     if (shouldDisplayDeletionDialog) {
@@ -72,9 +65,9 @@ fun TasksScreen(
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            itemsIndexed(mockList) { index, item ->
+            itemsIndexed(taskList) { index, item ->
                 val paddingTop = if (index == 0) 20.dp else 0.dp
-                val paddingBottom = if (index == mockList.size - 1) 20.dp else 0.dp
+                val paddingBottom = if (index == taskList.size - 1) 20.dp else 0.dp
                 var isComplete by remember { mutableStateOf(false) }
 
                 TodoItem(
