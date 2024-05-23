@@ -9,6 +9,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import com.ferrarib.todolist.R
 
 @Composable
 fun InteractiveDialog(
@@ -21,6 +23,7 @@ fun InteractiveDialog(
 ) {
     AlertDialog(
         modifier = modifier,
+        shape = MaterialTheme.shapes.medium,
         title = {
             Text(text = title, style = MaterialTheme.typography.titleSmall)
         },
@@ -31,12 +34,18 @@ fun InteractiveDialog(
         onDismissRequest = onDismissRequest,
         dismissButton = {
             TextButton(onClick = onDismissRequest) {
-                Text(text = "No")
+                Text(
+                    text = stringResource(id = R.string.deletion_dialog_user_input_dismiss),
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         },
         confirmButton = {
             TextButton(onClick = onConfirmation) {
-                Text(text = "Yes")
+                Text(
+                    text = stringResource(id = R.string.deletion_dialog_user_input_confirmation),
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         }
     )

@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ferrarib.todolist.R
 import com.ferrarib.todolist.ui.components.InteractiveDialog
@@ -49,8 +50,8 @@ fun TodosScreen(
 
     if (shouldDisplayDeletionDialog) {
         InteractiveDialog(
-            title = "Delete",
-            content = "Are you sure that you want to delete this item?",
+            title = stringResource(id = R.string.deletion_dialog_title),
+            content = stringResource(id = R.string.deletion_dialog_content),
             onDismissRequest = {
                 shouldDisplayDeletionDialog = false
             },
@@ -63,7 +64,7 @@ fun TodosScreen(
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        ScreenTitle(title = "Your TO-DOs")
+        ScreenTitle(title = stringResource(id = R.string.todos_list_screen_title))
 
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(16.dp)
