@@ -1,29 +1,28 @@
 package com.ferrarib.todolist.presentation.todos
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.ferrarib.todolist.R
 import com.ferrarib.todolist.ui.theme.Purple80
-import com.ferrarib.todolist.ui.theme.TodolistTheme
-import timber.log.Timber
 
 val mockList: List<String>
     get() {
@@ -44,13 +43,18 @@ fun TodosScreen(
         modifier = modifier.fillMaxSize()
     ) {
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(vertical = 20.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(mockList) { item ->
-                TodoItem(content = item, onItemClicked = { id ->
-                    onDetailsClicked.invoke(id)
-                })
+            itemsIndexed(mockList) { index, item ->
+                val paddingTop = if (index == 0) 20.dp else 0.dp
+                val paddingBottom = if (index == mockList.size - 1) 20.dp else 0.dp
+
+                TodoItem(
+                    modifier = Modifier.padding(top = paddingTop, bottom = paddingBottom),
+                    content = item,
+                    onItemClicked = { id ->
+                        onDetailsClicked.invoke(id)
+                    })
             }
         }
     }
@@ -65,6 +69,7 @@ fun TodoItem(
     val shape = RoundedCornerShape(16.dp)
 
     Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
@@ -82,5 +87,15 @@ fun TodoItem(
             modifier = Modifier.padding(horizontal = 20.dp),
             text = content
         )
+
+        IconButton(
+            modifier = Modifier.padding(end = 16.dp),
+            onClick = { /*TODO*/ }
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_delete_24),
+                contentDescription = null
+            )
+        }
     }
 }
