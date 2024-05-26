@@ -1,4 +1,4 @@
-package com.ferrarib.todolist.presentation.todos
+package com.ferrarib.todolist.presentation.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,27 +14,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TasksViewModel @Inject constructor(
+class DetailsViewModel @Inject constructor(
     private val repository: TasksRepository,
     @IODispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private val _tasksListState: MutableStateFlow<List<Task>> = MutableStateFlow(emptyList())
-    val tasksListState: StateFlow<List<Task>> = _tasksListState
+    private val _selectedTaskState = MutableStateFlow<Task?>(null)
+    val selectedTaskState: StateFlow<Task?> = _selectedTaskState
 
-    init {
+    fun getTask(id: Long) {
         viewModelScope.launch(dispatcher) {
-            val allTasks = repository.getAll()
-            _tasksListState.update { allTasks }
+            val task = repository.getById(id)
+            _selectedTaskState.update { task }
         }
     }
 
-    fun removeTask(id: Long) {
+    fun addTask(content: String) {
         viewModelScope.launch(dispatcher) {
-            val task = repository.getById(id)
-            repository.remove(task)
-
-            _tasksListState.update { repository.getAll() }
+            repository.insert(Task(content = content, isComplete = false))
         }
     }
 }

@@ -9,7 +9,7 @@ interface TasksRepository {
 
     fun getAll(): List<Task>
 
-    fun getById(id: String): Task
+    fun getById(id: Long): Task
 
     fun insert(task: Task)
 
@@ -33,7 +33,7 @@ class TasksRepositoryImpl @Inject constructor(
         return dao.getAllTasks()
     }
 
-    override fun getById(id: String): Task {
-        return dao.getById(id.toInt())
+    override fun getById(id: Long): Task {
+        return dao.getById(id)
     }
 }

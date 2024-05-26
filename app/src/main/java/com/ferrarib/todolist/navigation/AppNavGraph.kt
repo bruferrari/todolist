@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.ferrarib.todolist.presentation.details.DetailsScreen
 import com.ferrarib.todolist.presentation.todos.TasksScreen
 import androidx.hilt.navigation.compose.hiltViewModel
+import timber.log.Timber
 
 sealed class Screens(val route: String) {
     data object Todos : Screens(route = "todo_list")
@@ -26,6 +27,7 @@ fun AppNavGraph(navController: NavHostController) {
             TasksScreen(
                 viewModel = hiltViewModel(),
                 onDetailsClicked = { id ->
+                    Timber.d("Opening details for id = $id")
                     navController.navigate("${Screens.TodoDetails.route}/?id=$id")
                 },
                 onAddNewClicked = {
@@ -41,7 +43,10 @@ fun AppNavGraph(navController: NavHostController) {
                 nullable = true
             })
         ) { backStackEntry ->
-            DetailsScreen(id = backStackEntry.arguments?.getString(Params.Id.value))
+            DetailsScreen(
+                id = backStackEntry.arguments?.getString(Params.Id.value)?.toLong(),
+                viewModel = hiltViewModel()
+            )
         }
     }
 }

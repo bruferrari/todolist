@@ -12,6 +12,7 @@
 
     <!-- region details screen -->
     <string name="details_screen_title">Details</string>
-    <string name="details_screen_new_title">New Note</string>
+    <string name="details_screen_new_title">New Task</string>
+    <string name="details_screen_save_button_label">Save</string>
     <!-- endregion -->
 </resources>

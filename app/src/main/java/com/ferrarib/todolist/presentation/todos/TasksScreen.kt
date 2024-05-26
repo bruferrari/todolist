@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -46,11 +47,12 @@ import timber.log.Timber
 fun TasksScreen(
     modifier: Modifier = Modifier,
     viewModel: TasksViewModel,
-    onDetailsClicked: (String) -> Unit,
+    onDetailsClicked: (Long?) -> Unit,
     onAddNewClicked: () -> Unit
 ) {
     val taskList by viewModel.tasksListState.collectAsState()
     var shouldDisplayDeletionDialog by remember { mutableStateOf(false) }
+    var selectedId by remember { mutableStateOf<Long?>(null) }
 
     if (shouldDisplayDeletionDialog) {
         InteractiveDialog(
@@ -60,7 +62,10 @@ fun TasksScreen(
                 shouldDisplayDeletionDialog = false
             },
             onConfirmation = {
-                // TODO: call deletion
+                selectedId?.run {
+                    viewModel.removeTask(this)
+                }
+
                 shouldDisplayDeletionDialog = false
             })
     }
@@ -81,13 +86,15 @@ fun TasksScreen(
 
                     TodoItem(
                         modifier = Modifier.padding(top = paddingTop, bottom = paddingBottom),
+                        id = item.id,
                         content = item.content,
                         isComplete = isComplete,
                         onItemClicked = { id ->
                             onDetailsClicked.invoke(id)
                         },
                         onDeleteItemClicked = { id ->
-                            Timber.d("Dialog shown for id: $id")
+                            Timber.d("Interaction Dialog shown for id: $id")
+                            selectedId = id
                             shouldDisplayDeletionDialog = true
                         },
                         onComplete = { id ->
@@ -113,11 +120,12 @@ fun TasksScreen(
 @Composable
 fun TodoItem(
     modifier: Modifier = Modifier,
+    id: Long?,
     content: String,
     isComplete: Boolean,
-    onItemClicked: (String) -> Unit,
-    onDeleteItemClicked: (String) -> Unit,
-    onComplete: (String) -> Unit
+    onItemClicked: (Long?) -> Unit,
+    onDeleteItemClicked: (Long?) -> Unit,
+    onComplete: (Long?) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -134,12 +142,12 @@ fun TodoItem(
             .clickable(
                 enabled = true,
                 onClick = {
-                    onItemClicked.invoke("1")
+                    onItemClicked.invoke(id)
                 })
     ) {
         Checkbox(
             checked = isComplete,
-            onCheckedChange = { onComplete.invoke("1") },
+            onCheckedChange = { onComplete.invoke(id) },
             colors = CheckboxDefaults.colors()
                 .copy(
                     uncheckedCheckmarkColor = MaterialTheme.colorScheme.onPrimary,
@@ -163,7 +171,7 @@ fun TodoItem(
 
         IconButton(
             modifier = Modifier.padding(end = 16.dp),
-            onClick = { onDeleteItemClicked.invoke("1") }
+            onClick = { onDeleteItemClicked.invoke(id) }
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_delete_24),
