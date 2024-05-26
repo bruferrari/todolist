@@ -158,6 +158,7 @@ fun TodoItem(
 
         Text(
             modifier = Modifier
+                .weight(1f)
                 .padding(end = SizeTokens.medium),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimary.copy(
@@ -170,7 +171,7 @@ fun TodoItem(
         )
 
         IconButton(
-            modifier = Modifier.padding(end = 16.dp),
+            modifier = Modifier.padding(end = SizeTokens.small),
             onClick = { onDeleteItemClicked.invoke(id) }
         ) {
             Image(
