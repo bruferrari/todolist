@@ -26,15 +26,19 @@ fun AppNavGraph(navController: NavHostController) {
             TasksScreen(
                 viewModel = hiltViewModel(),
                 onDetailsClicked = { id ->
-                    navController.navigate("${Screens.TodoDetails.route}/$id")
+                    navController.navigate("${Screens.TodoDetails.route}/?id=$id")
+                },
+                onAddNewClicked = {
+                    navController.navigate("${Screens.TodoDetails.route}/?id=${null}")
                 }
             )
         }
 
         composable(
-            route = "${Screens.TodoDetails.route}/{${Params.Id.value}}",
+            route = "${Screens.TodoDetails.route}/?id={${Params.Id.value}}",
             arguments = listOf(navArgument(Params.Id.value) {
                 type = NavType.StringType
+                nullable = true
             })
         ) { backStackEntry ->
             DetailsScreen(id = backStackEntry.arguments?.getString(Params.Id.value))
