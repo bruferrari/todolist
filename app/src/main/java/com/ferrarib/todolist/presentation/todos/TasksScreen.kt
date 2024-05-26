@@ -34,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ferrarib.todolist.R
 import com.ferrarib.todolist.ui.components.InteractiveDialog
@@ -45,7 +46,8 @@ import timber.log.Timber
 fun TasksScreen(
     modifier: Modifier = Modifier,
     viewModel: TasksViewModel,
-    onDetailsClicked: (String) -> Unit
+    onDetailsClicked: (String) -> Unit,
+    onAddNewClicked: () -> Unit
 ) {
     val taskList by viewModel.tasksListState.collectAsState()
     var shouldDisplayDeletionDialog by remember { mutableStateOf(false) }
@@ -101,9 +103,7 @@ fun TasksScreen(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(bottom = SizeTokens.larger, end = SizeTokens.larger),
-            onClick = {
-                Timber.d("Add clicked!")
-            },
+            onClick = onAddNewClicked
         ) {
             Icon(Icons.Filled.Add, null)
         }
@@ -150,12 +150,14 @@ fun TodoItem(
 
         Text(
             modifier = Modifier
-                .padding(horizontal = 20.dp),
+                .padding(end = SizeTokens.medium),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimary.copy(
                 alpha = if (isComplete) 0.6f else 1f
             ),
             textDecoration = if (isComplete) TextDecoration.LineThrough else TextDecoration.None,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             text = content
         )
 

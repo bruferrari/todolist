@@ -9,4 +9,9 @@
     <string name="deletion_dialog_user_input_confirmation">Yes</string>
     <string name="deletion_dialog_user_input_dismiss">No</string>
     <!-- endregion -->
+
+    <!-- region details screen -->
+    <string name="details_screen_title">Details</string>
+    <string name="details_screen_new_title">New Note</string>
+    <!-- endregion -->
 </resources>

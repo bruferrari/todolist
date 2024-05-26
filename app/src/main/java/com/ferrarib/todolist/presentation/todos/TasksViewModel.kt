@@ -12,7 +12,7 @@ class TasksViewModel @Inject constructor() : ViewModel() {
         get() {
             val temp = mutableListOf<String>()
             (0..20).forEach { index ->
-                temp.add("This is a test $index")
+                temp.add("This is a test test test test test test test test test test test test $index")
             }
 
             return temp.toList()
