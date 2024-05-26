@@ -13,7 +13,7 @@ import timber.log.Timber
 
 sealed class Screens(val route: String) {
     data object Tasks : Screens(route = "tasks")
-    data object TodoDetails : Screens(route = "detail")
+    data object TaskDetails : Screens(route = "task_detail")
 }
 
 sealed class Params(val value: String) {
@@ -28,16 +28,16 @@ fun AppNavGraph(navController: NavHostController) {
                 viewModel = hiltViewModel(),
                 onDetailsClicked = { id ->
                     Timber.d("Opening details for id = $id")
-                    navController.navigate("${Screens.TodoDetails.route}/?id=$id")
+                    navController.navigate("${Screens.TaskDetails.route}/?id=$id")
                 },
                 onAddNewClicked = {
-                    navController.navigate("${Screens.TodoDetails.route}/?id=${null}")
+                    navController.navigate("${Screens.TaskDetails.route}/?id=${null}")
                 }
             )
         }
 
         composable(
-            route = "${Screens.TodoDetails.route}/?id={${Params.Id.value}}",
+            route = "${Screens.TaskDetails.route}/?id={${Params.Id.value}}",
             arguments = listOf(navArgument(Params.Id.value) {
                 type = NavType.StringType
                 nullable = true
