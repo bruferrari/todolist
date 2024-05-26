@@ -25,6 +25,7 @@ fun DetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: DetailsViewModel,
     id: Long?,
+    onSaveButtonPressed: () -> Unit
 ) {
     id?.run { viewModel.getTask(this) }
 
@@ -57,7 +58,8 @@ fun DetailsScreen(
             Button(
                 modifier = Modifier.padding(start = SizeTokens.large),
                 onClick = {
-                    viewModel.addTask(content)
+                    viewModel.addNewTask(content)
+                    onSaveButtonPressed.invoke()
                 }) {
                 Text(text = stringResource(id = R.string.details_screen_save_button_label))
             }

@@ -3,19 +3,22 @@ package com.ferrarib.todolist.presentation.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ferrarib.todolist.core.di.IODispatcher
-import com.ferrarib.todolist.data.local.repository.TasksRepository
 import com.ferrarib.todolist.domain.Task
+import com.ferrarib.todolist.domain.usecase.AddTask
+import com.ferrarib.todolist.domain.usecase.GetUniqueTask
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val repository: TasksRepository,
+    private val getUniqueTask: GetUniqueTask,
+    private val addTask: AddTask,
     @IODispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -24,14 +27,15 @@ class DetailsViewModel @Inject constructor(
 
     fun getTask(id: Long) {
         viewModelScope.launch(dispatcher) {
-            val task = repository.getById(id)
-            _selectedTaskState.update { task }
+            getUniqueTask(id).collectLatest { task ->
+                _selectedTaskState.update { task }
+            }
         }
     }
 
-    fun addTask(content: String) {
+    fun addNewTask(content: String) {
         viewModelScope.launch(dispatcher) {
-            repository.insert(Task(content = content, isComplete = false))
+            addTask(content)
         }
     }
 }

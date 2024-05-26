@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.hilt.navigation)
     implementation(libs.timber)
     implementation(libs.room)
+    implementation(libs.room.ktx)
     ksp(libs.hilt.compiler)
     ksp(libs.room.compiler)
     testImplementation(libs.junit)

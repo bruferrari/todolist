@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import timber.log.Timber
 
 sealed class Screens(val route: String) {
-    data object Todos : Screens(route = "todo_list")
+    data object Tasks : Screens(route = "tasks")
     data object TodoDetails : Screens(route = "detail")
 }
 
@@ -22,8 +22,8 @@ sealed class Params(val value: String) {
 
 @Composable
 fun AppNavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Screens.Todos.route) {
-        composable(route = Screens.Todos.route) {
+    NavHost(navController = navController, startDestination = Screens.Tasks.route) {
+        composable(route = Screens.Tasks.route) {
             TasksScreen(
                 viewModel = hiltViewModel(),
                 onDetailsClicked = { id ->
@@ -45,7 +45,10 @@ fun AppNavGraph(navController: NavHostController) {
         ) { backStackEntry ->
             DetailsScreen(
                 id = backStackEntry.arguments?.getString(Params.Id.value)?.toLong(),
-                viewModel = hiltViewModel()
+                viewModel = hiltViewModel(),
+                onSaveButtonPressed = {
+                    navController.popBackStack()
+                }
             )
         }
     }
