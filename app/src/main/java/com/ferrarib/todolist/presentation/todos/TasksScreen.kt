@@ -81,7 +81,7 @@ fun TasksScreen(
 
                     TodoItem(
                         modifier = Modifier.padding(top = paddingTop, bottom = paddingBottom),
-                        content = item,
+                        content = item.content,
                         isComplete = isComplete,
                         onItemClicked = { id ->
                             onDetailsClicked.invoke(id)
