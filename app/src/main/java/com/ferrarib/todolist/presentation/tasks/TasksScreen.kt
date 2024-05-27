@@ -1,4 +1,4 @@
-package com.ferrarib.todolist.presentation.todos
+package com.ferrarib.todolist.presentation.tasks
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.ferrarib.todolist.presentation.details.DetailsScreen
-import com.ferrarib.todolist.presentation.todos.TasksScreen
+import com.ferrarib.todolist.presentation.tasks.TasksScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import timber.log.Timber
 
