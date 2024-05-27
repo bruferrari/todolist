@@ -46,11 +46,12 @@ import timber.log.Timber
 fun TasksScreen(
     modifier: Modifier = Modifier,
     viewModel: TasksViewModel,
-    onDetailsClicked: (String) -> Unit,
-    onAddNewClicked: () -> Unit
+    onDetailsPressed: (Long?) -> Unit,
+    onAddNewPressed: () -> Unit
 ) {
     val taskList by viewModel.tasksListState.collectAsState()
     var shouldDisplayDeletionDialog by remember { mutableStateOf(false) }
+    var selectedId by remember { mutableStateOf<Long?>(null) }
 
     if (shouldDisplayDeletionDialog) {
         InteractiveDialog(
@@ -60,7 +61,10 @@ fun TasksScreen(
                 shouldDisplayDeletionDialog = false
             },
             onConfirmation = {
-                // TODO: call deletion
+                selectedId?.run {
+                    viewModel.removeTask(this)
+                }
+
                 shouldDisplayDeletionDialog = false
             })
     }
@@ -77,22 +81,23 @@ fun TasksScreen(
                 itemsIndexed(taskList) { index, item ->
                     val paddingTop = if (index == 0) 20.dp else 0.dp
                     val paddingBottom = if (index == taskList.size - 1) 20.dp else 0.dp
-                    var isComplete by remember { mutableStateOf(false) }
 
                     TodoItem(
                         modifier = Modifier.padding(top = paddingTop, bottom = paddingBottom),
-                        content = item,
-                        isComplete = isComplete,
-                        onItemClicked = { id ->
-                            onDetailsClicked.invoke(id)
+                        id = item.id,
+                        content = item.content,
+                        isComplete = item.isComplete,
+                        onItemPressed = { id ->
+                            onDetailsPressed.invoke(id)
                         },
-                        onDeleteItemClicked = { id ->
-                            Timber.d("Dialog shown for id: $id")
+                        onDeleteItemPressed = { id ->
+                            Timber.d("Interaction Dialog shown for id: $id")
+                            selectedId = id
                             shouldDisplayDeletionDialog = true
                         },
-                        onComplete = { id ->
-                            isComplete = !isComplete
-                            Timber.d("Checked: $id")
+                        onCheckPressed = { id ->
+                            id?.run { viewModel.setTaskCompletion(this, !item.isComplete) }
+                            Timber.d("Marked item id $id as completed")
                         }
                     )
                 }
@@ -103,7 +108,7 @@ fun TasksScreen(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(bottom = SizeTokens.larger, end = SizeTokens.larger),
-            onClick = onAddNewClicked
+            onClick = onAddNewPressed
         ) {
             Icon(Icons.Filled.Add, null)
         }
@@ -113,11 +118,12 @@ fun TasksScreen(
 @Composable
 fun TodoItem(
     modifier: Modifier = Modifier,
+    id: Long?,
     content: String,
     isComplete: Boolean,
-    onItemClicked: (String) -> Unit,
-    onDeleteItemClicked: (String) -> Unit,
-    onComplete: (String) -> Unit
+    onItemPressed: (Long?) -> Unit,
+    onDeleteItemPressed: (Long?) -> Unit,
+    onCheckPressed: (Long?) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -134,12 +140,12 @@ fun TodoItem(
             .clickable(
                 enabled = true,
                 onClick = {
-                    onItemClicked.invoke("1")
+                    onItemPressed.invoke(id)
                 })
     ) {
         Checkbox(
             checked = isComplete,
-            onCheckedChange = { onComplete.invoke("1") },
+            onCheckedChange = { onCheckPressed.invoke(id) },
             colors = CheckboxDefaults.colors()
                 .copy(
                     uncheckedCheckmarkColor = MaterialTheme.colorScheme.onPrimary,
@@ -150,6 +156,7 @@ fun TodoItem(
 
         Text(
             modifier = Modifier
+                .weight(1f)
                 .padding(end = SizeTokens.medium),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimary.copy(
@@ -162,8 +169,8 @@ fun TodoItem(
         )
 
         IconButton(
-            modifier = Modifier.padding(end = 16.dp),
-            onClick = { onDeleteItemClicked.invoke("1") }
+            modifier = Modifier.padding(end = SizeTokens.small),
+            onClick = { onDeleteItemPressed.invoke(id) }
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_delete_24),
