@@ -8,6 +8,7 @@ import com.ferrarib.todolist.domain.model.Task
 import com.ferrarib.todolist.domain.usecase.DeleteTask
 import com.ferrarib.todolist.domain.usecase.GetTasks
 import com.ferrarib.todolist.domain.usecase.GetUniqueTask
+import com.ferrarib.todolist.domain.usecase.NotValidIdentifierException
 import com.ferrarib.todolist.domain.usecase.UpdateTaskCompletion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,8 +51,12 @@ class TasksViewModel @Inject constructor(
     }
 
     fun setTaskCompletion(id: Long, value: Boolean) {
-        viewModelScope.launch(coroutineContext) {
-            updateTaskCompletion(id, value)
+        try {
+            viewModelScope.launch(coroutineContext) {
+                updateTaskCompletion(id, value)
+            }
+        } catch (e: NotValidIdentifierException) {
+            Timber.e(e)
         }
     }
 }

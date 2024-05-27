@@ -4,6 +4,7 @@ import com.ferrarib.todolist.domain.model.Task
 import com.ferrarib.todolist.domain.usecase.DeleteTask
 import com.ferrarib.todolist.domain.usecase.GetTasks
 import com.ferrarib.todolist.domain.usecase.GetUniqueTask
+import com.ferrarib.todolist.domain.usecase.GetUniqueTaskTest
 import com.ferrarib.todolist.domain.usecase.UpdateTaskCompletion
 import io.mockk.every
 import io.mockk.mockk

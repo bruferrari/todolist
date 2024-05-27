@@ -7,6 +7,7 @@ import com.ferrarib.todolist.core.utils.corroutineExceptionHandler
 import com.ferrarib.todolist.domain.model.Task
 import com.ferrarib.todolist.domain.usecase.AddTask
 import com.ferrarib.todolist.domain.usecase.GetUniqueTask
+import com.ferrarib.todolist.domain.usecase.NotValidIdentifierException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,8 +32,12 @@ class DetailsViewModel @Inject constructor(
 
     fun getTask(id: Long) {
         viewModelScope.launch(coroutineContext) {
-            getUniqueTask(id).collectLatest { task ->
-                _selectedTaskState.update { task }
+            try {
+                getUniqueTask(id).collectLatest { task ->
+                    _selectedTaskState.update { task }
+                }
+            } catch (e: NotValidIdentifierException) {
+                Timber.e(e)
             }
         }
     }
