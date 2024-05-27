@@ -26,11 +26,11 @@ fun AppNavGraph(navController: NavHostController) {
         composable(route = Screens.Tasks.route) {
             TasksScreen(
                 viewModel = hiltViewModel(),
-                onDetailsClicked = { id ->
+                onDetailsPressed = { id ->
                     Timber.d("Opening details for id = $id")
                     navController.navigate("${Screens.TaskDetails.route}/?id=$id")
                 },
-                onAddNewClicked = {
+                onAddNewPressed = {
                     navController.navigate("${Screens.TaskDetails.route}/?id=${null}")
                 }
             )

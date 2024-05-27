@@ -46,8 +46,8 @@ import timber.log.Timber
 fun TasksScreen(
     modifier: Modifier = Modifier,
     viewModel: TasksViewModel,
-    onDetailsClicked: (Long?) -> Unit,
-    onAddNewClicked: () -> Unit
+    onDetailsPressed: (Long?) -> Unit,
+    onAddNewPressed: () -> Unit
 ) {
     val taskList by viewModel.tasksListState.collectAsState()
     var shouldDisplayDeletionDialog by remember { mutableStateOf(false) }
@@ -87,10 +87,10 @@ fun TasksScreen(
                         id = item.id,
                         content = item.content,
                         isComplete = item.isComplete,
-                        onItemClicked = { id ->
-                            onDetailsClicked.invoke(id)
+                        onItemPressed = { id ->
+                            onDetailsPressed.invoke(id)
                         },
-                        onDeleteItemClicked = { id ->
+                        onDeleteItemPressed = { id ->
                             Timber.d("Interaction Dialog shown for id: $id")
                             selectedId = id
                             shouldDisplayDeletionDialog = true
@@ -108,7 +108,7 @@ fun TasksScreen(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(bottom = SizeTokens.larger, end = SizeTokens.larger),
-            onClick = onAddNewClicked
+            onClick = onAddNewPressed
         ) {
             Icon(Icons.Filled.Add, null)
         }
@@ -121,8 +121,8 @@ fun TodoItem(
     id: Long?,
     content: String,
     isComplete: Boolean,
-    onItemClicked: (Long?) -> Unit,
-    onDeleteItemClicked: (Long?) -> Unit,
+    onItemPressed: (Long?) -> Unit,
+    onDeleteItemPressed: (Long?) -> Unit,
     onCheckPressed: (Long?) -> Unit
 ) {
     Row(
@@ -140,7 +140,7 @@ fun TodoItem(
             .clickable(
                 enabled = true,
                 onClick = {
-                    onItemClicked.invoke(id)
+                    onItemPressed.invoke(id)
                 })
     ) {
         Checkbox(
@@ -170,7 +170,7 @@ fun TodoItem(
 
         IconButton(
             modifier = Modifier.padding(end = SizeTokens.small),
-            onClick = { onDeleteItemClicked.invoke(id) }
+            onClick = { onDeleteItemPressed.invoke(id) }
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_delete_24),
