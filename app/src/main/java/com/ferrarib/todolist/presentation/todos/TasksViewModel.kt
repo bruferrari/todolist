@@ -3,7 +3,8 @@ package com.ferrarib.todolist.presentation.todos
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ferrarib.todolist.core.di.IODispatcher
-import com.ferrarib.todolist.domain.Task
+import com.ferrarib.todolist.data.local.entity.TaskEntity
+import com.ferrarib.todolist.domain.model.Task
 import com.ferrarib.todolist.domain.usecase.DeleteTask
 import com.ferrarib.todolist.domain.usecase.GetTasks
 import com.ferrarib.todolist.domain.usecase.GetUniqueTask

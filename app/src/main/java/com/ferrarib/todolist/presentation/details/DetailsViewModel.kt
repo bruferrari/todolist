@@ -3,7 +3,7 @@ package com.ferrarib.todolist.presentation.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ferrarib.todolist.core.di.IODispatcher
-import com.ferrarib.todolist.domain.Task
+import com.ferrarib.todolist.domain.model.Task
 import com.ferrarib.todolist.domain.usecase.AddTask
 import com.ferrarib.todolist.domain.usecase.GetUniqueTask
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +35,7 @@ class DetailsViewModel @Inject constructor(
 
     fun addNewTask(content: String) {
         viewModelScope.launch(dispatcher) {
-            addTask(content)
+            addTask(task = Task(content = content, isComplete = false))
         }
     }
 }

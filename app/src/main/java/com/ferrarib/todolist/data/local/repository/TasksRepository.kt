@@ -2,19 +2,19 @@ package com.ferrarib.todolist.data.local.repository
 
 import com.ferrarib.todolist.data.local.dao.TasksDao
 import com.ferrarib.todolist.data.local.db.TasksDatabase
-import com.ferrarib.todolist.domain.Task
+import com.ferrarib.todolist.data.local.entity.TaskEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface TasksRepository {
 
-    fun getAll(): Flow<List<Task>>
+    fun getAll(): Flow<List<TaskEntity>>
 
-    fun getById(id: Long): Flow<Task>
+    fun getById(id: Long): Flow<TaskEntity>
 
-    fun insert(task: Task)
+    fun insert(task: TaskEntity)
 
-    fun remove(task: Task)
+    fun remove(task: TaskEntity)
 
     fun updateTaskCompletion(id: Long, value: Boolean)
 }
@@ -24,11 +24,11 @@ class TasksRepositoryImpl @Inject constructor(
 ) : TasksRepository {
     private val dao: TasksDao = db.taskDao()
 
-    override fun insert(task: Task) {
+    override fun insert(task: TaskEntity) {
         dao.insertTask(task)
     }
 
-    override fun remove(task: Task) {
+    override fun remove(task: TaskEntity) {
         dao.removeTask(task)
     }
 
@@ -36,11 +36,11 @@ class TasksRepositoryImpl @Inject constructor(
         dao.updateTaskCompletion(id, value)
     }
 
-    override fun getAll(): Flow<List<Task>> {
+    override fun getAll(): Flow<List<TaskEntity>> {
          return dao.getAllTasks()
     }
 
-    override fun getById(id: Long): Flow<Task> {
+    override fun getById(id: Long): Flow<TaskEntity> {
         return dao.getById(id)
     }
 }

@@ -5,9 +5,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.ferrarib.todolist.data.local.DateTimeTypeConverter
 import com.ferrarib.todolist.data.local.dao.TasksDao
-import com.ferrarib.todolist.domain.Task
+import com.ferrarib.todolist.data.local.entity.TaskEntity
 
-@Database(entities = [Task::class], version = 1)
+@Database(entities = [TaskEntity::class], version = 1)
 @TypeConverters(DateTimeTypeConverter::class)
 abstract class TasksDatabase : RoomDatabase() {
     abstract fun taskDao() : TasksDao
