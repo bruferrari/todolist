@@ -4,7 +4,6 @@ import com.ferrarib.todolist.data.local.dao.TasksDao
 import com.ferrarib.todolist.data.local.db.TasksDatabase
 import com.ferrarib.todolist.domain.Task
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 interface TasksRepository {
@@ -16,6 +15,8 @@ interface TasksRepository {
     fun insert(task: Task)
 
     fun remove(task: Task)
+
+    fun updateTaskCompletion(id: Long, value: Boolean)
 }
 
 class TasksRepositoryImpl @Inject constructor(
@@ -29,6 +30,10 @@ class TasksRepositoryImpl @Inject constructor(
 
     override fun remove(task: Task) {
         dao.removeTask(task)
+    }
+
+    override fun updateTaskCompletion(id: Long, value: Boolean) {
+        dao.updateTaskCompletion(id, value)
     }
 
     override fun getAll(): Flow<List<Task>> {

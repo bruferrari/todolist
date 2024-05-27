@@ -7,13 +7,13 @@ import com.ferrarib.todolist.domain.Task
 import com.ferrarib.todolist.domain.usecase.DeleteTask
 import com.ferrarib.todolist.domain.usecase.GetTasks
 import com.ferrarib.todolist.domain.usecase.GetUniqueTask
+import com.ferrarib.todolist.domain.usecase.UpdateTaskCompletion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,6 +23,7 @@ class TasksViewModel @Inject constructor(
     private val getTasks: GetTasks,
     private val deleteTask: DeleteTask,
     private val getUniqueTask: GetUniqueTask,
+    private val updateTaskCompletion: UpdateTaskCompletion,
     @IODispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
@@ -41,6 +42,12 @@ class TasksViewModel @Inject constructor(
         viewModelScope.launch(dispatcher) {
             val task = getUniqueTask(id).first()
             deleteTask(task)
+        }
+    }
+
+    fun setTaskCompletion(id: Long, value: Boolean) {
+        viewModelScope.launch(dispatcher) {
+            updateTaskCompletion(id, value)
         }
     }
 }

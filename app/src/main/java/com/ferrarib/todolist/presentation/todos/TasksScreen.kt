@@ -25,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -82,13 +81,12 @@ fun TasksScreen(
                 itemsIndexed(taskList) { index, item ->
                     val paddingTop = if (index == 0) 20.dp else 0.dp
                     val paddingBottom = if (index == taskList.size - 1) 20.dp else 0.dp
-                    var isComplete by remember { mutableStateOf(false) }
 
                     TodoItem(
                         modifier = Modifier.padding(top = paddingTop, bottom = paddingBottom),
                         id = item.id,
                         content = item.content,
-                        isComplete = isComplete,
+                        isComplete = item.isComplete,
                         onItemClicked = { id ->
                             onDetailsClicked.invoke(id)
                         },
@@ -97,9 +95,9 @@ fun TasksScreen(
                             selectedId = id
                             shouldDisplayDeletionDialog = true
                         },
-                        onComplete = { id ->
-                            isComplete = !isComplete
-                            Timber.d("Checked: $id")
+                        onCheckPressed = { id ->
+                            id?.run { viewModel.setTaskCompletion(this, !item.isComplete) }
+                            Timber.d("Marked item id $id as completed")
                         }
                     )
                 }
@@ -125,7 +123,7 @@ fun TodoItem(
     isComplete: Boolean,
     onItemClicked: (Long?) -> Unit,
     onDeleteItemClicked: (Long?) -> Unit,
-    onComplete: (Long?) -> Unit
+    onCheckPressed: (Long?) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -147,7 +145,7 @@ fun TodoItem(
     ) {
         Checkbox(
             checked = isComplete,
-            onCheckedChange = { onComplete.invoke(id) },
+            onCheckedChange = { onCheckPressed.invoke(id) },
             colors = CheckboxDefaults.colors()
                 .copy(
                     uncheckedCheckmarkColor = MaterialTheme.colorScheme.onPrimary,

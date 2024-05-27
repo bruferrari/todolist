@@ -20,4 +20,7 @@ interface TasksDao {
 
     @Delete
     fun removeTask(task: Task)
+
+    @Query("UPDATE tasks SET isComplete = :isComplete WHERE id = :id")
+    fun updateTaskCompletion(id: Long, isComplete: Boolean)
 }
