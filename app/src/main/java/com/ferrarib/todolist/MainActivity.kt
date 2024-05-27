@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.ferrarib.todolist.navigation.AppNavGraph
-import com.ferrarib.todolist.ui.theme.TodolistTheme
+import com.ferrarib.todolist.core.ui.theme.TodolistTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

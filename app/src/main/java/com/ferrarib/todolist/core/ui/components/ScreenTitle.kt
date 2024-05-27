@@ -1,4 +1,4 @@
-package com.ferrarib.todolist.ui.components
+package com.ferrarib.todolist.core.ui.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -7,7 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.ferrarib.todolist.ui.tokens.SizeTokens
+import com.ferrarib.todolist.core.ui.tokens.SizeTokens
 
 @Composable
 fun ScreenTitle(

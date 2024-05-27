@@ -1,4 +1,4 @@
-package com.ferrarib.todolist.ui.theme
+package com.ferrarib.todolist.core.ui.theme
 
 import android.app.Activity
 import android.os.Build

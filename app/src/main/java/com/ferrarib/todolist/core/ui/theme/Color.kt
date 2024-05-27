@@ -1,4 +1,4 @@
-package com.ferrarib.todolist.ui.theme
+package com.ferrarib.todolist.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

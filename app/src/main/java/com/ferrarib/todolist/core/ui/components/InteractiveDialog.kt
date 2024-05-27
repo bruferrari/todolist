@@ -1,4 +1,4 @@
-package com.ferrarib.todolist.ui.components
+package com.ferrarib.todolist.core.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

@@ -1,4 +1,4 @@
-package com.ferrarib.todolist.ui.tokens
+package com.ferrarib.todolist.core.ui.tokens
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily

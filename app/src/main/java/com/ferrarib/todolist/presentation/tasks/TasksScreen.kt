@@ -37,9 +37,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.ferrarib.todolist.R
-import com.ferrarib.todolist.ui.components.InteractiveDialog
-import com.ferrarib.todolist.ui.components.ScreenTitle
-import com.ferrarib.todolist.ui.tokens.SizeTokens
+import com.ferrarib.todolist.core.ui.components.InteractiveDialog
+import com.ferrarib.todolist.core.ui.components.ScreenTitle
+import com.ferrarib.todolist.core.ui.tokens.SizeTokens
 import timber.log.Timber
 
 @Composable
