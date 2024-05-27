@@ -1,10 +1,10 @@
-package com.ferrarib.todolist.ui.theme
+package com.ferrarib.todolist.core.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
 import androidx.compose.ui.unit.dp
-import com.ferrarib.todolist.ui.tokens.TypographyTokens
+import com.ferrarib.todolist.core.ui.tokens.TypographyTokens
 
 val Typography = Typography(
     bodySmall = TypographyTokens.bodySmall,
