@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -38,8 +39,8 @@ class TasksViewModel @Inject constructor(
 
     fun removeTask(id: Long) {
         viewModelScope.launch(dispatcher) {
-            val task = getUniqueTask(id).lastOrNull()
-            task?.run { deleteTask(this) }
+            val task = getUniqueTask(id).first()
+            deleteTask(task)
         }
     }
 }
