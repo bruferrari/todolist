@@ -3,6 +3,7 @@ package com.ferrarib.todolist.presentation.todos
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ferrarib.todolist.core.di.IODispatcher
+import com.ferrarib.todolist.core.utils.corroutineExceptionHandler
 import com.ferrarib.todolist.data.local.entity.TaskEntity
 import com.ferrarib.todolist.domain.model.Task
 import com.ferrarib.todolist.domain.usecase.DeleteTask
@@ -11,6 +12,7 @@ import com.ferrarib.todolist.domain.usecase.GetUniqueTask
 import com.ferrarib.todolist.domain.usecase.UpdateTaskCompletion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -28,11 +30,13 @@ class TasksViewModel @Inject constructor(
     @IODispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
+    private val coroutineContext = dispatcher + corroutineExceptionHandler
+
     private val _tasksListState: MutableStateFlow<List<Task>> = MutableStateFlow(emptyList())
     val tasksListState: StateFlow<List<Task>> = _tasksListState
 
     init {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch(coroutineContext) {
             getTasks().collectLatest { tasks ->
                 _tasksListState.update { tasks }
             }
@@ -40,14 +44,14 @@ class TasksViewModel @Inject constructor(
     }
 
     fun removeTask(id: Long) {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch(coroutineContext) {
             val task = getUniqueTask(id).first()
             deleteTask(task)
         }
     }
 
     fun setTaskCompletion(id: Long, value: Boolean) {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch(coroutineContext) {
             updateTaskCompletion(id, value)
         }
     }

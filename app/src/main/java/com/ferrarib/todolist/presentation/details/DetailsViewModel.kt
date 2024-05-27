@@ -3,6 +3,7 @@ package com.ferrarib.todolist.presentation.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ferrarib.todolist.core.di.IODispatcher
+import com.ferrarib.todolist.core.utils.corroutineExceptionHandler
 import com.ferrarib.todolist.domain.model.Task
 import com.ferrarib.todolist.domain.usecase.AddTask
 import com.ferrarib.todolist.domain.usecase.GetUniqueTask
@@ -22,11 +23,13 @@ class DetailsViewModel @Inject constructor(
     @IODispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
+    private val coroutineContext = dispatcher + corroutineExceptionHandler
+
     private val _selectedTaskState = MutableStateFlow<Task?>(null)
     val selectedTaskState: StateFlow<Task?> = _selectedTaskState
 
     fun getTask(id: Long) {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch(coroutineContext) {
             getUniqueTask(id).collectLatest { task ->
                 _selectedTaskState.update { task }
             }
@@ -34,7 +37,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun addNewTask(content: String) {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch(coroutineContext) {
             addTask(task = Task(content = content, isComplete = false))
         }
     }
