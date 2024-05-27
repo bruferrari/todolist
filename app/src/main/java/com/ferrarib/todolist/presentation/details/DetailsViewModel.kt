@@ -3,11 +3,11 @@ package com.ferrarib.todolist.presentation.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ferrarib.todolist.core.di.IODispatcher
+import com.ferrarib.todolist.core.exception.InvalidIdentifierException
 import com.ferrarib.todolist.core.utils.corroutineExceptionHandler
 import com.ferrarib.todolist.domain.model.Task
 import com.ferrarib.todolist.domain.usecase.AddTask
 import com.ferrarib.todolist.domain.usecase.GetUniqueTask
-import com.ferrarib.todolist.domain.usecase.NotValidIdentifierException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +36,7 @@ class DetailsViewModel @Inject constructor(
                 getUniqueTask(id).collectLatest { task ->
                     _selectedTaskState.update { task }
                 }
-            } catch (e: NotValidIdentifierException) {
+            } catch (e: InvalidIdentifierException) {
                 Timber.e(e)
             }
         }

@@ -1,7 +1,7 @@
 package com.ferrarib.todolist.domain.usecase
 
+import com.ferrarib.todolist.core.exception.InvalidIdentifierException
 import com.ferrarib.todolist.data.local.repository.TasksRepository
-import com.ferrarib.todolist.taskEntityFlow
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
@@ -30,7 +30,7 @@ class UpdateTaskCompletionTest {
         }
     }
 
-    @Test(expected = NotValidIdentifierException::class)
+    @Test(expected = InvalidIdentifierException::class)
     fun `ensure that repository don't update anything when id is not valid`() {
         every { repository.updateTaskCompletion(any(), any()) } returns Unit
 

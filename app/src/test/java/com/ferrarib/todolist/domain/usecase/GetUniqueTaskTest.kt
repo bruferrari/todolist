@@ -1,5 +1,6 @@
 package com.ferrarib.todolist.domain.usecase
 
+import com.ferrarib.todolist.core.exception.InvalidIdentifierException
 import com.ferrarib.todolist.data.local.repository.TasksRepository
 import com.ferrarib.todolist.taskEntityFlow
 import io.mockk.Called
@@ -31,7 +32,7 @@ class GetUniqueTaskTest {
         }
     }
 
-    @Test(expected = NotValidIdentifierException::class)
+    @Test(expected = InvalidIdentifierException::class)
     fun `ensure that repository don't get anything when id is not valid`() {
         every { repository.getById(any()) } returns taskEntityFlow
 

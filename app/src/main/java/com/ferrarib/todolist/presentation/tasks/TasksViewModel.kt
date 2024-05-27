@@ -3,12 +3,12 @@ package com.ferrarib.todolist.presentation.tasks
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ferrarib.todolist.core.di.IODispatcher
+import com.ferrarib.todolist.core.exception.InvalidIdentifierException
 import com.ferrarib.todolist.core.utils.corroutineExceptionHandler
 import com.ferrarib.todolist.domain.model.Task
 import com.ferrarib.todolist.domain.usecase.DeleteTask
 import com.ferrarib.todolist.domain.usecase.GetTasks
 import com.ferrarib.todolist.domain.usecase.GetUniqueTask
-import com.ferrarib.todolist.domain.usecase.NotValidIdentifierException
 import com.ferrarib.todolist.domain.usecase.UpdateTaskCompletion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -55,7 +55,7 @@ class TasksViewModel @Inject constructor(
             viewModelScope.launch(coroutineContext) {
                 updateTaskCompletion(id, value)
             }
-        } catch (e: NotValidIdentifierException) {
+        } catch (e: InvalidIdentifierException) {
             Timber.e(e)
         }
     }
