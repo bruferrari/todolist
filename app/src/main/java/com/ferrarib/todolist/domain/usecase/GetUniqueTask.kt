@@ -11,7 +11,7 @@ class GetUniqueTask @Inject constructor(
     private val repository: TasksRepository
 ) {
     operator fun invoke(id: Long): Flow<Task> {
-        if (id < 0) throw NotValidIdentifierException(id)
+        if (id < 0L) throw NotValidIdentifierException(id)
         return repository.getById(id).map { it.toDomain() }
     }
 }
