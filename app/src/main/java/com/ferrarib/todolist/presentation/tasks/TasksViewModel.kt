@@ -1,10 +1,9 @@
-package com.ferrarib.todolist.presentation.todos
+package com.ferrarib.todolist.presentation.tasks
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ferrarib.todolist.core.di.IODispatcher
 import com.ferrarib.todolist.core.utils.corroutineExceptionHandler
-import com.ferrarib.todolist.data.local.entity.TaskEntity
 import com.ferrarib.todolist.domain.model.Task
 import com.ferrarib.todolist.domain.usecase.DeleteTask
 import com.ferrarib.todolist.domain.usecase.GetTasks
@@ -12,7 +11,6 @@ import com.ferrarib.todolist.domain.usecase.GetUniqueTask
 import com.ferrarib.todolist.domain.usecase.UpdateTaskCompletion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
