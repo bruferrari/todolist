@@ -31,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.ferrarib.todolist.R
 import com.ferrarib.todolist.core.ui.components.InteractiveDialog
 import com.ferrarib.todolist.core.ui.components.ScreenTitle
+import com.ferrarib.todolist.core.ui.components.TaskItem
 import com.ferrarib.todolist.core.ui.tokens.SizeTokens
 import timber.log.Timber
 
@@ -82,7 +84,7 @@ fun TasksScreen(
                     val paddingTop = if (index == 0) 20.dp else 0.dp
                     val paddingBottom = if (index == taskList.size - 1) 20.dp else 0.dp
 
-                    TodoItem(
+                    TaskItem(
                         modifier = Modifier.padding(top = paddingTop, bottom = paddingBottom),
                         id = item.id,
                         content = item.content,
@@ -111,71 +113,6 @@ fun TasksScreen(
             onClick = onAddNewPressed
         ) {
             Icon(Icons.Filled.Add, null)
-        }
-    }
-}
-
-@Composable
-fun TodoItem(
-    modifier: Modifier = Modifier,
-    id: Long?,
-    content: String,
-    isComplete: Boolean,
-    onItemPressed: (Long?) -> Unit,
-    onDeleteItemPressed: (Long?) -> Unit,
-    onCheckPressed: (Long?) -> Unit
-) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(60.dp)
-            .padding(horizontal = 20.dp)
-            .background(
-                color = MaterialTheme.colorScheme.primary,
-                shape = MaterialTheme.shapes.medium
-            )
-            .clip(MaterialTheme.shapes.medium)
-            .clickable(
-                enabled = true,
-                onClick = {
-                    onItemPressed.invoke(id)
-                })
-    ) {
-        Checkbox(
-            checked = isComplete,
-            onCheckedChange = { onCheckPressed.invoke(id) },
-            colors = CheckboxDefaults.colors()
-                .copy(
-                    uncheckedCheckmarkColor = MaterialTheme.colorScheme.onPrimary,
-                    checkedBorderColor = MaterialTheme.colorScheme.onPrimary,
-                    uncheckedBorderColor = MaterialTheme.colorScheme.onPrimary
-                )
-        )
-
-        Text(
-            modifier = Modifier
-                .weight(1f)
-                .padding(end = SizeTokens.medium),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onPrimary.copy(
-                alpha = if (isComplete) 0.6f else 1f
-            ),
-            textDecoration = if (isComplete) TextDecoration.LineThrough else TextDecoration.None,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            text = content
-        )
-
-        IconButton(
-            modifier = Modifier.padding(end = SizeTokens.small),
-            onClick = { onDeleteItemPressed.invoke(id) }
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_delete_24),
-                contentDescription = null
-            )
         }
     }
 }

@@ -2,23 +2,23 @@ package com.ferrarib.todolist.core.ui.components
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ferrarib.todolist.RobolectricActivity
+import com.ferrarib.todolist.R
+import com.ferrarib.todolist.context
 import com.ferrarib.todolist.core.ui.theme.TodolistTheme
 import com.ferrarib.todolist.domain.model.Task
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.ferrarib.todolist.R
 
 @RunWith(AndroidJUnit4::class)
 class TaskContentTest {
 
     @get:Rule
-    val composeTestRule = createAndroidComposeRule<RobolectricActivity>()
+    val composeTestRule = createComposeRule()
 
     @Test
     fun `ensure component is being displayed`() {
@@ -61,7 +61,7 @@ class TaskContentTest {
         }
 
         composeTestRule.onNodeWithText(
-            composeTestRule.activity.getString(R.string.details_screen_save_button_label)
+            context.getString(R.string.details_screen_save_button_label)
         ).assertIsDisplayed()
     }
 
@@ -75,7 +75,7 @@ class TaskContentTest {
         }
 
         composeTestRule.onNodeWithText(
-            composeTestRule.activity.getString(R.string.details_screen_save_button_label)
+            context.getString(R.string.details_screen_save_button_label)
         ).assertIsNotDisplayed()
     }
 }
