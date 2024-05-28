@@ -12,17 +12,6 @@ It is built using Kotlin and showcases a clean architecture approach to Android 
 - Persist data locally
 - Allow the user to visualize long text tasks
 
-## Screenshots
-
-<img src ="https://github.com/bruferrari/todolist/assets/7285376/80dcbdae-8e4e-46eb-bf06-379f55a8b73a" width=270 height=600/>
-
-<img src ="https://github.com/bruferrari/todolist/assets/7285376/bc420a9c-770f-4cea-bd36-b729d74b694a" width=270 height=600/>
-
-<img src ="https://github.com/bruferrari/todolist/assets/7285376/9f3b6927-1f92-48e7-9cdc-7ff68d03fac3" width=270 height=600/>
-
-<img src ="https://github.com/bruferrari/todolist/assets/7285376/f48cce06-fe0f-452e-b429-db19efb0fefc" width=270 height=600/>
-
-
 ## Getting Started
 
 ### Prerequisites
