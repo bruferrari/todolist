@@ -19,6 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -35,6 +38,8 @@ fun TaskItem(
     onDeleteItemPressed: (Long?) -> Unit,
     onCheckPressed: (Long?) -> Unit
 ) {
+    val checkboxContentDescription = stringResource(id = R.string.todos_list_checkbox_description)
+
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -54,6 +59,9 @@ fun TaskItem(
                 })
     ) {
         Checkbox(
+            modifier = Modifier.semantics {
+                contentDescription = checkboxContentDescription
+            },
             checked = isComplete,
             onCheckedChange = { onCheckPressed.invoke(id) },
             colors = CheckboxDefaults.colors()
@@ -80,13 +88,12 @@ fun TaskItem(
 
         IconButton(
             modifier = Modifier
-                .testTag("delete_icon")
                 .padding(end = SizeTokens.small),
             onClick = { onDeleteItemPressed.invoke(id) }
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_delete_24),
-                contentDescription = null
+                contentDescription = stringResource(id = R.string.todos_list_delete_button_description),
             )
         }
     }

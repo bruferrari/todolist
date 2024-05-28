@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">todolist</string>
 
+    <!-- region task screen -->
     <string name="todos_list_screen_title">Tasks</string>
+    <string name="todos_list_delete_button_description">Delete Item</string>
+    <string name="todos_list_checkbox_description">Mark as resolved</string>
+    <!-- endregion -->
 
     <!-- region interactive dialog -->
     <string name="deletion_dialog_title">Delete</string>
