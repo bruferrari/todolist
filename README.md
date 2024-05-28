@@ -1,6 +1,4 @@
-## ToDoList
-
-# ToDoList App
+# ToDoList
 
 ## Overview
 
@@ -16,7 +14,14 @@ It is built using Kotlin and showcases a clean architecture approach to Android 
 
 ## Screenshots
 
-Include screenshots here if available.
+<img src ="https://github.com/bruferrari/todolist/assets/7285376/80dcbdae-8e4e-46eb-bf06-379f55a8b73a" width=270 height=600/>
+
+<img src ="https://github.com/bruferrari/todolist/assets/7285376/bc420a9c-770f-4cea-bd36-b729d74b694a" width=270 height=600/>
+
+<img src ="https://github.com/bruferrari/todolist/assets/7285376/9f3b6927-1f92-48e7-9cdc-7ff68d03fac3" width=270 height=600/>
+
+<img src ="https://github.com/bruferrari/todolist/assets/7285376/f48cce06-fe0f-452e-b429-db19efb0fefc" width=270 height=600/>
+
 
 ## Getting Started
 
@@ -24,7 +29,7 @@ Include screenshots here if available.
 
 - Android Studio
 - Kotlin 1.9.24
-- Android SDK 31+
+- Android SDK 26+
 
 ### Installation
 
@@ -62,15 +67,13 @@ The ViewModel exposes LiveData objects for the View to observe, ensuring that th
 
 The app uses Dagger/Hilt for dependency injection. This helps in managing dependencies efficiently and supports better testability by allowing dependencies to be mocked or replaced as needed.
 
-### Repository Pattern
+### Repository
 
 The Repository pattern is used to abstract the data sources from the rest of the app. 
 This allows the ViewModel to interact with a simple API and keeps data operations encapsulated.
 
-### StateFlow and ViewModel
-
-- **StateFlow**: A lifecycle-aware observable data holder. The UI components observe the flow objects to get updates.
-- **ViewModel**: Stores and manages UI-related data. The ViewModel is lifecycle-aware, meaning it will survive configuration changes such as screen rotations.
+### Navigation
+This app uses the [Navigation Component](https://developer.android.com/guide/navigation) to navigate the user between screens.
 
 ### Room Persistence Library
 
@@ -80,7 +83,7 @@ The app uses Room for local database management. Room provides an abstraction la
 
 The architecture supports both unit and UI testing. The separation of concerns allows for isolated testing of each component, ensuring a reliable and maintainable codebase.
 
-By adhering to the MVVM architecture, the ToDoList app achieves a scalable and maintainable structure that facilitates both development and testing.
+The ToDoList app implements UI testing using [Robolectric](https://robolectric.org) which is a framework that allow running instrumentation tests in a specific sandbox that doesn't require an emulator of physical device to run.
 
 ## License
 
@@ -88,4 +91,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any questions or suggestions, please open an issue or contact the repository owner.
+For any questions or suggestions, please open an issue or contact [Bruno Ferrari](mailto:b.ferrari09@gmail.com).
