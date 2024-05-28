@@ -22,6 +22,7 @@ import com.ferrarib.todolist.domain.model.Task
 fun TaskContent(
     modifier: Modifier = Modifier,
     task: Task?,
+    hint: String? = null,
     onSaveButtonPressed: (String) -> Unit
 ) {
     var content by rememberSaveable { mutableStateOf("") }
@@ -31,6 +32,9 @@ fun TaskContent(
         modifier = modifier.fillMaxWidth(),
         value = if (addingNew) content else task?.content ?: "",
         enabled = addingNew,
+        placeholder = {
+            Text(text = hint ?: stringResource(id = R.string.details_screen_text_field_hint))
+        },
         onValueChange = { newValue ->
             content = newValue
         })

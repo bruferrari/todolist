@@ -14,5 +14,6 @@
     <string name="details_screen_title">Details</string>
     <string name="details_screen_new_title">New Task</string>
     <string name="details_screen_save_button_label">Save</string>
+    <string name="details_screen_text_field_hint">What do you want to do?</string>
     <!-- endregion -->
 </resources>
