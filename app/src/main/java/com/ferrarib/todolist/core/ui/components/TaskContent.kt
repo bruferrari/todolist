@@ -10,7 +10,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -23,6 +22,7 @@ import com.ferrarib.todolist.domain.model.Task
 fun TaskContent(
     modifier: Modifier = Modifier,
     task: Task?,
+    hint: String? = null,
     onSaveButtonPressed: (String) -> Unit
 ) {
     var content by rememberSaveable { mutableStateOf("") }
@@ -32,6 +32,9 @@ fun TaskContent(
         modifier = modifier.fillMaxWidth(),
         value = if (addingNew) content else task?.content ?: "",
         enabled = addingNew,
+        placeholder = {
+            Text(text = hint ?: stringResource(id = R.string.details_screen_text_field_hint))
+        },
         onValueChange = { newValue ->
             content = newValue
         })

@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">todolist</string>
 
+    <!-- region task screen -->
     <string name="todos_list_screen_title">Tasks</string>
+    <string name="todos_list_delete_button_description">Delete Item</string>
+    <string name="todos_list_checkbox_description">Mark as resolved</string>
+    <!-- endregion -->
 
     <!-- region interactive dialog -->
     <string name="deletion_dialog_title">Delete</string>
@@ -14,5 +18,6 @@
     <string name="details_screen_title">Details</string>
     <string name="details_screen_new_title">New Task</string>
     <string name="details_screen_save_button_label">Save</string>
+    <string name="details_screen_text_field_hint">What do you want to do?</string>
     <!-- endregion -->
 </resources>

@@ -1,5 +1,6 @@
 package com.ferrarib.todolist
 
+import androidx.test.platform.app.InstrumentationRegistry
 import com.ferrarib.todolist.data.local.entity.TaskEntity
 import kotlinx.coroutines.flow.flowOf
 
@@ -11,3 +12,5 @@ internal val taskList = listOf(
 
 internal val taskEntityListFlow = flowOf(taskList)
 internal val taskEntityFlow = flowOf(taskList[0])
+
+internal val context get() = InstrumentationRegistry.getInstrumentation().targetContext
