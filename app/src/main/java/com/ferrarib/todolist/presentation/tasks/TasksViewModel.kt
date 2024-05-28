@@ -51,12 +51,12 @@ class TasksViewModel @Inject constructor(
     }
 
     fun setTaskCompletion(id: Long, value: Boolean) {
-        try {
-            viewModelScope.launch(coroutineContext) {
+        viewModelScope.launch(coroutineContext) {
+            try {
                 updateTaskCompletion(id, value)
+            } catch (e: InvalidIdentifierException) {
+                Timber.e(e)
             }
-        } catch (e: InvalidIdentifierException) {
-            Timber.e(e)
         }
     }
 }

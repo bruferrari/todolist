@@ -32,12 +32,12 @@ class DetailsViewModel @Inject constructor(
 
     fun getTask(id: Long) {
         viewModelScope.launch(coroutineContext) {
-            try {
-                getUniqueTask(id).collectLatest { task ->
+            getUniqueTask(id).collectLatest { task ->
+                try {
                     _selectedTaskState.update { task }
+                } catch (e: InvalidIdentifierException) {
+                    Timber.e(e)
                 }
-            } catch (e: InvalidIdentifierException) {
-                Timber.e(e)
             }
         }
     }
