@@ -21,40 +21,27 @@ class TasksViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     private val testDispatcher = UnconfinedTestDispatcher()
 
-    private lateinit var viewModel: TasksViewModel
-
-    private lateinit var getTasks: GetTasks
-    private lateinit var getUniqueTask: GetUniqueTask
-    private lateinit var deleteTask: DeleteTask
-    private lateinit var updateTaskCompletion: UpdateTaskCompletion
-
-    @Before
-    fun setUp() {
+    @Test
+    fun `ensure that list of tasks state is filled`() {
         val mockedList = listOf(
             Task(id = 1L, content = "task 1", isComplete = false),
             Task(id = 2L, content = "task 2", isComplete = false),
             Task(id = 3L, content = "task 3", isComplete = false)
         )
 
-        getTasks = mockk<GetTasks>()
-        getUniqueTask = mockk<GetUniqueTask>()
-        deleteTask = mockk<DeleteTask>()
-        updateTaskCompletion = mockk<UpdateTaskCompletion>()
+        val getTasks = mockk<GetTasks>()
 
         // need to answer for viewmodel init
         every { getTasks.invoke() } returns flowOf(mockedList)
 
-        viewModel = TasksViewModel(
+        val viewModel = TasksViewModel(
             getTasks = getTasks,
-            getUniqueTask = getUniqueTask,
-            deleteTask = deleteTask,
-            updateTaskCompletion = updateTaskCompletion,
+            getUniqueTask = mockk(),
+            deleteTask = mockk(),
+            updateTaskCompletion = mockk(),
             dispatcher = testDispatcher
         )
-    }
 
-    @Test
-    fun `ensure that list of tasks state is filled`() {
         runTest {
             val current = viewModel.tasksListState.first()
             assertEquals(3, current.size)
@@ -63,6 +50,17 @@ class TasksViewModelTest {
 
     @Test
     fun `ensure that tasks are being removed`() {
+        val getUniqueTask = mockk<GetUniqueTask>()
+        val deleteTask = mockk<DeleteTask>()
+
+        val viewModel = TasksViewModel(
+            getTasks = mockk(),
+            getUniqueTask = getUniqueTask,
+            deleteTask = deleteTask,
+            updateTaskCompletion = mockk(),
+            dispatcher = testDispatcher
+        )
+
         val task = Task(
             id = 3L,
             content = "",
@@ -77,6 +75,15 @@ class TasksViewModelTest {
 
     @Test
     fun `ensure tasks are being marked as complete`() {
+        val updateTaskCompletion = mockk<UpdateTaskCompletion>()
+        val viewModel = TasksViewModel(
+            getTasks = mockk(),
+            getUniqueTask = mockk(),
+            deleteTask = mockk(),
+            updateTaskCompletion = updateTaskCompletion,
+            dispatcher = testDispatcher
+        )
+
         every { updateTaskCompletion(any(), any()) } returns Unit
         viewModel.setTaskCompletion(3L, value = true)
 
